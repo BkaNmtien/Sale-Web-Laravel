@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Laravel\Socialite\Facades\Socialite;
+use Illuminate\Support\Facades\Session;
 
 class UserController extends Controller
 {
@@ -37,6 +38,9 @@ class UserController extends Controller
         //lay tham so tu the a de dieu huong ve trang checkout
         if(request()->page){
             $paramCheckout = request()->page;
+            $checkUrl = session();
+            $checkUrl->put('checkUrl',$paramCheckout);
+            
             return view('user.account', compact('paramCheckout'));
         }
         return view('user.account');
@@ -128,7 +132,11 @@ class UserController extends Controller
         Auth::login($existingUser);
     
         // Chuyển hướng về trang chủ
-        return redirect('/check-out');
-
+        $getUrl = session()->pull('checkUrl');
+        if($getUrl == 'checkout.index'){
+            return redirect('/check-out');
+        }else{
+            return redirect('/');
+        }
     }
 }
