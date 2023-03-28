@@ -18,20 +18,10 @@ class UserController extends Controller
 
         //Lay thong tin lich su mua hang
         $order = Order::orderBy('id','desc')->get()->toArray();
-        // foreach($order as $value){
-        //     dd($value['created_at']);
-        // }
         $history_buy = OrderDetail::orderBy('order_id','desc')
             ->get()
             ->groupBy('order_id')
             ->toArray();
-        // foreach($history_buy as $key=>$value){
-        //    foreach($value as $value1){
-        //     echo "<pre>";
-        //         var_dump($value1);
-        //         echo "</pre>";
-        //    }
-        // }
         return view('user.profile', compact('order','history_buy'));
     }
     public function index(){
@@ -136,6 +126,7 @@ class UserController extends Controller
         if($getUrl == 'checkout.index'){
             return redirect('/check-out');
         }else{
+            
             return redirect('/');
         }
     }

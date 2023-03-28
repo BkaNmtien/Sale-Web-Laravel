@@ -26,6 +26,7 @@ class CheckoutController extends Controller
         
 
         $order = Order::create([
+            'order_code' => '#'.substr(md5(uniqid(rand(), true)), 0, 6),
             'user_id' => $request->user_id,
             'name' => $request->name,
             'phone' => $request->phone,

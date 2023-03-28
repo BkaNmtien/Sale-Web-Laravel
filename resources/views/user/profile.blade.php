@@ -23,52 +23,30 @@
                                     <table class="account__table table table-responsive-sm table-hover">
                                         <thead class="account__table--header">
                                             <tr class="account__table--header__child">
+                                                <th class="account__table--header__child--items col-md-2">Số thứ tự</th>
                                                 <th class="account__table--header__child--items col-md-2">Mã đơn hàng</th>
-                                                <th class="account__table--header__child--items col-md-4">Sản phẩm</th>
-                                                <th class="account__table--header__child--items col-md-3">Thông tin đơn hàng</th>
-                                                <th class="account__table--header__child--items col-md-2">Trạng thái</th>
-                                                <th class="account__table--header__child--items col-md-1">Hành động</th>	 	 	 	 	 	 	 	
+                                                <th class="account__table--header__child--items col-md-3">Ngày tháng đặt hàng</th>
+                                                <th class="account__table--header__child--items col-md-3">Trạng thái</th>
+                                                <th class="account__table--header__child--items col-md-2">Hành động</th>	 	 	 	 	 	 	 	
                                             </tr>
                                         </thead>
                                         <tbody class="account__table--body mobile__none">
                                             @foreach($order as $data)
                                             <tr>
-                                                <!-- @foreach($history_buy as $value) -->
                                                 <td scope="row" class="col-md-2">{{$loop->iteration}}</td>
-                                                <td class="account__table--body__child--items col-md-5">
-                                                    <div class="d-flex flex-row media ">
-                                                        <a class="" href="#">
-                              
-                                                       <img src="{{url('uploads/product')}}/Ao-polo-nam-cool-max.jpg" style="width: 80px" alt="" >
-                                                        </a>
-                                                        <div class="w-100">
-                                                            <p class="font-weight-bold px-2 mb-0 text-truncate" style="max-width: 300px;" >fhskjdfhksdằefafwfweffafewfefjafdkshdưadwdwdwd</p>
-                                                            <div class="d-flex justify-content-between  p-2">
-                                                                <div class="price">
-                                                                    <p class="">Size:</p>
-                                                                </div>
-                                                                <div class="quantity">
-                                                                    <p class="">x2</p>
-                                                                </div>
-                                                            </div>
-                                                            <div class="d-flex flex-row-reverse">
-                                                                <p>1000đ</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <!-- @endforeach -->
-                                                <td class="account__table--body__child--items col-md-3">
-                                                    <span>Ngày mua: {{$data['created_at']}} </span><br>
-                                                    <span>Địa chỉ nhận hàng: {{$data['address']}}</span><br>
-                                                    <span>Lời nhắn: {{$data['note']}}</span>
-                                                </td>
+                                                <td class="account__table--body__child--items col-md-2">{{$data['order_code']}}</td>
+                                                <td class="account__table--body__child--items col-md-3">{{date('Y-m-d H:i:s', strtotime($data['created_at']))}}</td>
                                                 @if($data['status'] == 1)
-                                                    <td class="account__table--body__child--items col-md-2 text-success">Đã xác nhận</td>
+                                                    <td class="account__table--body__child--items col-md-3 text-success">Đã xác nhận</td>
                                                 @else
-                                                    <td class="account__table--body__child--items col-md-2 text-danger">Chưa xác nhận</td>
+                                                    <td class="account__table--body__child--items col-md-3 text-danger">Chưa xác nhận</td>
                                                 @endif
-                                                <td class="account__table--body__child--items col-md-1">Huy</td>
+                                                <td class="account__table--body__child--items col-md-2">
+                                                    <a href="#" title="Xem chi tiết"><i class="fa fa-eye" style="color: #0df21c;"></i></a>
+                                                    <button style="border:none;background: transparent;" type="submit" 
+                                                    onclick="return confirm('Bạn có chắc muốn xóa đơn hàng này không?')" 
+                                                    title="Xóa"><i style="color:red" class="fa fa-fw fa-trash-o"></i></button>
+                                                </td>
                                             </tr>
                                             @endforeach
                                         </tbody>

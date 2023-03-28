@@ -84,7 +84,7 @@
                     </form>
 
                   
-                  <form action="{{ route('order.destroy',$value->id) }}" method="POST">
+                    <form action="{{ route('order.destroy',$value->id) }}" method="POST">
                       @csrf
                       @method('DELETE')
                       <input type="hidden" name="status" value="1">
