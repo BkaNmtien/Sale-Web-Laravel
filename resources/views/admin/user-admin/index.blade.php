@@ -11,21 +11,21 @@
 
     <!-- Main content -->
     <section class="content">
-                @if(Session::has('message'))
-                    <div class="alert alert-success">
-                          <button type="button" data-dismiss="alert" class="close" aria-label="Close">
-                            <span aria-hidden="true">&times;</span></button>
-                            <strong>
-                              {{ Session::get('message') }}
-                            </strong>
-                    </div>
-                @endif
-                @if(Session::has('err'))
-                    <div class="alert alert-danger alert-dismissible" role="alert">
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <strong>{{Session::get('err')}}</strong>
-                    </div>
-                @endif
+      @if(Session::has('message'))
+          <div class="alert alert-success">
+                <button type="button" data-dismiss="alert" class="close" aria-label="Close">
+                  <span aria-hidden="true">&times;</span></button>
+                  <strong>
+                    {{ Session::get('message') }}
+                  </strong>
+          </div>
+      @endif
+      @if(Session::has('err'))
+          <div class="alert alert-danger alert-dismissible" role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <strong>{{Session::get('err')}}</strong>
+          </div>
+      @endif
       <!-- Default box -->
       <div class="col-md-12">
           <div class="box">

@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Pagination\Paginator;
 use App\Helper\Cart;
 use App\Models\Category;
 use App\Models\Brand;
@@ -37,5 +38,7 @@ class AppServiceProvider extends ServiceProvider
                 'brandMenu'=> Brand::all(),
             ]);
         });
+
+        Paginator::useBootstrap();
     }
 }

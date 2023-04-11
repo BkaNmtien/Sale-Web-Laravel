@@ -17,12 +17,12 @@ class UserController extends Controller
     public function myAccount(){
 
         //Lay thong tin lich su mua hang
-        $order = Order::orderBy('id','desc')->get()->toArray();
-        $history_buy = OrderDetail::orderBy('order_id','desc')
-            ->get()
-            ->groupBy('order_id')
-            ->toArray();
-        return view('user.profile', compact('order','history_buy'));
+        $emailLogin = Session::get('email_order');
+        //Phan trang
+        $order = Order::where('email', $emailLogin)
+                        ->orderBy('id','desc')
+                        ->paginate(5);
+        return view('user.profile', compact('order'));
     }
     public function index(){
         //lay tham so tu the a de dieu huong ve trang checkout
@@ -36,6 +36,7 @@ class UserController extends Controller
         return view('user.account');
     }
 
+    //Dang ki
     public function register(Request $request){
         $request->validate([
             'name' => 'required',
@@ -61,6 +62,7 @@ class UserController extends Controller
         }
     }
 
+    //Dang nhap băng tai khoan
     public function login(Request $request){
         $request->validate([
             'email' => 'email|required',
@@ -72,8 +74,10 @@ class UserController extends Controller
         ]); 
         if(Auth::attempt(['email' => $request->email, 'password' => $request->password])){
             if($request->paramCheckout){
+                Session::put('email_order', $request->email);
                 return redirect()->route('checkout.index');
             }else{
+                Session::put('email_order', $request->email);
                 return redirect()->route('home.index');
             }
         }else{
@@ -93,10 +97,12 @@ class UserController extends Controller
         ->redirect();
     }
 
+    //Dang nhap voi google
     public function handleGoogleCallback()
     {
         
-        $googleUser = Socialite::driver('google')->user(); 
+        $googleUser = Socialite::driver('google')->user();
+        Session::put('email_order', $googleUser->email);
        
 
         $existingUser = User::where('email', $googleUser->email)->first();
@@ -121,7 +127,7 @@ class UserController extends Controller
         // Đăng nhập người dùng
         Auth::login($existingUser);
     
-        // Chuyển hướng về trang chủ
+        // Chuyển hướng về trang chủ hoặc checkout
         $getUrl = session()->pull('checkUrl');
         if($getUrl == 'checkout.index'){
             return redirect('/check-out');

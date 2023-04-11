@@ -5,13 +5,23 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\LoginAdminRequest;
+use App\Models\Order;
+use App\Models\OrderDetail;
 use Auth;
 
 
 class AdminController extends Controller
 {
     public function index(){
-        return view('admin.home');
+        $order = Order::where('status', 0)->orderBy('id','desc')->paginate(6);
+
+        $product = OrderDetail::select('products.name', 'products.image', 'order_details.product_id', OrderDetail::raw('COUNT(order_details.product_id) as total_product'))
+                    ->join('products', 'products.id', '=', 'order_details.product_id')
+                    ->groupBy('products.name', 'products.image', 'order_details.product_id')
+                    ->orderByDesc('total_product')
+                    ->paginate(6);
+                  
+        return view('admin.home', compact('order', 'product'));
     }
 
     public function login(){
